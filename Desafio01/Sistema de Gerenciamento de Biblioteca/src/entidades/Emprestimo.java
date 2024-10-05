@@ -1,11 +1,7 @@
 package entidades;
 
 import java.math.BigDecimal;
-import java.sql.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
-import conexao.conexaoBancoDeDados;
 
 public class Emprestimo {
 
@@ -26,90 +22,61 @@ public class Emprestimo {
         this.multa = multa;
     }
 
+	public situacaoEmprestimo getId() {
+		return id;
+	}
 
-    // Método para verificar a disponibilidade do livro no banco de dados
-    public boolean verificarDisponibilidade(String isbn) {
-        String sql = "SELECT quantidade FROM livros WHERE isbn = ?";
+	public void setId(situacaoEmprestimo id) {
+		this.id = id;
+	}
 
-        try (Connection connection = conexaoBancoDeDados.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+	public Livro getLivro() {
+		return livro;
+	}
 
-            statement.setString(1, isbn);
-            ResultSet resultSet = statement.executeQuery();
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}
 
-            if (resultSet.next()) {
-                int quantidade = resultSet.getInt("quantidade");
-                return quantidade > 0;
-            }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-        } catch (SQLException e) {
-            System.err.println("Erro ao verificar disponibilidade: " + e.getMessage());
-        }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-        return false;
-    }
+	public LocalDate getDataEmprestimo() {
+		return dataEmprestimo;
+	}
 
-    // Método para subtrair a quantidade de livros disponíveis após um empréstimo
-    public void subtrairQuantidade(String isbn) {
-        String sql = "UPDATE livros SET quantidade = quantidade - 1 WHERE isbn = ?";
+	public void setDataEmprestimo(LocalDate dataEmprestimo) {
+		this.dataEmprestimo = dataEmprestimo;
+	}
 
-        try (Connection connection = conexaoBancoDeDados.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+	public LocalDate getDataDevolucao() {
+		return dataDevolucao;
+	}
 
-            statement.setString(1, isbn);
-            int rowsUpdated = statement.executeUpdate();
+	public void setDataDevolucao(LocalDate dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
 
-            if (rowsUpdated > 0) {
-                System.out.println("Quantidade de livros atualizada com sucesso.");
-            }
+	public String getEstado() {
+		return estado;
+	}
 
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar quantidade: " + e.getMessage());
-        }
-    }
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
-    // Método para calcular multa se o livro for devolvido após 5 dias
-    public BigDecimal calcularMulta(LocalDate dataDevolucaoPrevista) {
-        long diasAtraso = ChronoUnit.DAYS.between(dataDevolucaoPrevista, LocalDate.now());
+	public BigDecimal getMulta() {
+		return multa;
+	}
 
-        if (diasAtraso > 5) {
-            BigDecimal multa = new BigDecimal(diasAtraso - 5).multiply(new BigDecimal("5"));
-            return multa;
-        }
-
-        return BigDecimal.ZERO;
-    }
-
-    // Método para registrar o empréstimo
-    public void emprestimoLivro() {
-        if (!verificarDisponibilidade(livro.getIsbn())) {
-            System.out.println("Livro não disponível para empréstimo.");
-            return;
-        }
-
-        String sql = "INSERT INTO emprestimos (id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = conexaoBancoDeDados.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, String.valueOf(this.id));
-            statement.setString(2, this.livro.getIsbn());
-            statement.setString(3, this.usuario.getUsuarioID());
-            statement.setDate(4, Date.valueOf(this.dataEmprestimo));
-            statement.setDate(5, Date.valueOf(this.dataDevolucao));
-            statement.setString(6, this.estado);
-
-            // Calcula multa se houver atraso
-            BigDecimal multaCalculada = calcularMulta(this.dataDevolucao);
-            statement.setString(7, multaCalculada.toString());
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Empréstimo registrado com sucesso!");
-                subtrairQuantidade(this.livro.getIsbn()); // Atualiza a quantidade de livros
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao registrar empréstimo: " + e.getMessage());
-        }
-    }
+	public void setMulta(BigDecimal multa) {
+		this.multa = multa;
+	}
+    
+    
 }

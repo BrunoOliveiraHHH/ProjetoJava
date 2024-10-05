@@ -1,6 +1,7 @@
 package repositorio;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -20,11 +21,15 @@ public class UsuarioRepositorio {
 			Connection connection = con.getConnection();
 			Usuario usuarioDB = buscar(usuario);
 			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			Date dtAssociacao = Date.valueOf(usuario.getDataAssociacao().toString());
 
 			statement.setFloat(1, usuario.getId());
 			statement.setString(2, usuario.getNome());
 			statement.setString(3, usuario.getEndereco());
-			// todo colocar o resto dos parametros.
+			statement.setString(4, usuario.getEmail());
+			statement.setString(5, usuario.getTelefone());
+			statement.setDate(6, dtAssociacao);
 
 			if (usuarioDB == null) {
 				int rowsInserted = statement.executeUpdate();
