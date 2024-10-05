@@ -26,7 +26,7 @@ public class EmprestimoRepositorio {
 			Date dtEmprestimo = Date.valueOf(emprestimo.getDataEmprestimo().toString());
 			Date dtDevolucao = Date.valueOf(emprestimo.getDataDevolucao().toString());
 
-			statement.setString(1, emprestimo.getId());
+			statement.setLong(1, emprestimo.getId());
 			statement.setString(2, emprestimo.getLivro());
 			statement.setString(3, emprestimo.getUsuario());
 			statement.setDate(4, dtEmprestimo);

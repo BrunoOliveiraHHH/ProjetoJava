@@ -15,7 +15,7 @@ public class Main {
         System.out.println("4-Emprestimo");
         // to Do: aplicar listagem numerada de menus;
         
-        System.out.println("Escolha sua opção(numero):");
+        System.out.println("Escolha sua opção(numero): ");
         String escolha = sc.nextLine();
         
         boolean formatoValido = false;
