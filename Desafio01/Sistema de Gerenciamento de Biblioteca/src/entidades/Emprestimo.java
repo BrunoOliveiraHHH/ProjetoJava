@@ -5,22 +5,24 @@ import java.time.LocalDate;
 
 public class Emprestimo {
 
-    private situacaoEmprestimo id;
-    private Livro livro;
-    private Usuario usuario;
-    private LocalDate dataEmprestimo, dataDevolucao;
-    private String estado;
-    private BigDecimal multa;
+	private situacaoEmprestimo id;
+	private Livro livro;
+	private Usuario usuario;
+	private LocalDate dataEmprestimo;
+	private LocalDate dataDevolucao;
+	private String estado;
+	private Double multa;
 
-    public Emprestimo(situacaoEmprestimo id, Livro livro, Usuario usuario, LocalDate dataEmprestimo, LocalDate dataDevolucao, String estado, BigDecimal multa) {
-        this.id = id;
-        this.livro = livro;
-        this.usuario = usuario;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
-        this.estado = estado;
-        this.multa = multa;
-    }
+	public Emprestimo(situacaoEmprestimo id, Livro livro, Usuario usuario, LocalDate dataEmprestimo,
+			LocalDate dataDevolucao, String estado, Double multa) {
+		this.id = id;
+		this.livro = livro;
+		this.usuario = usuario;
+		this.dataEmprestimo = dataEmprestimo;
+		this.dataDevolucao = dataDevolucao;
+		this.estado = estado;
+		this.multa = multa;
+	}
 
 	public situacaoEmprestimo getId() {
 		return id;
@@ -77,6 +79,5 @@ public class Emprestimo {
 	public void setMulta(BigDecimal multa) {
 		this.multa = multa;
 	}
-    
-    
+
 }
