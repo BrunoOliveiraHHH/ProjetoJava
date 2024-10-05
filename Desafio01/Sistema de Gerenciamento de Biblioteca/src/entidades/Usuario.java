@@ -4,13 +4,12 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class Usuario {
-	private Long id;
+public class Usuario extends Pessoa {
+
 	private String endereco;
 	private String email;
 	private String telefone;
 	private List<Emprestimo> emprestimo;// INNER JOIN
-	private String nome;
 	private LocalDate dataAssociacao;
 
 	public Long getId() {
@@ -71,16 +70,12 @@ public class Usuario {
 
 	public Usuario(Long id, String endereco, String email, String telefone, List<Emprestimo> emprestimo, String nome,
 			LocalDate dataAssociacao) {
-		super();
-		this.id = id;
+		super(nome, id);
 		this.endereco = endereco;
 		this.email = email;
 		this.telefone = telefone;
 		this.emprestimo = emprestimo;
-		this.nome = nome;
 		this.dataAssociacao = dataAssociacao;
 	}
 
-	public Usuario() {
-	}
 }

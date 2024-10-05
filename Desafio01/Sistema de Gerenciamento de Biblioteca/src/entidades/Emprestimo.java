@@ -78,11 +78,11 @@ public class Emprestimo {
 	}
 
 	public BigDecimal getMulta() {
-		return multa;
+		return multa != null ? BigDecimal.valueOf(multa) : null;
 	}
 
-	public void setMulta(BigDecimal multa) {
-		this.multa = multa;
+	public void setMulta(Double multa) {
+		this.multa = multa != null ? multa.doubleValue() : null;
 	}
 
 }

@@ -5,10 +5,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import conexao.conexaoBancoDeDados;
 import entidades.Emprestimo;
 import entidades.Livro;
 
 public class EmprestimoRepositorio {
+	
+	private conexaoBancoDeDados con;
 
 	public boolean Emprestimos(Emprestimo emprestimo) {
 		boolean retorno = false;
@@ -28,8 +31,8 @@ public class EmprestimoRepositorio {
 			statement.setString(3, emprestimo.getUsuario());
 			statement.setDate(4, dtEmprestimo);
 			statement.setDate(5, dtDevolucao);
-			statement.setString(5, emprestimo.getEstado());
-			statement.setDouble(6, emprestimo.getMulta());
+			statement.setString(6, emprestimo.getEstado());
+			statement.setBigDecimal(7, emprestimo.getMulta());
 
 			if (emprestimoDB == null) {
 				int rowsInserted = statement.executeUpdate();

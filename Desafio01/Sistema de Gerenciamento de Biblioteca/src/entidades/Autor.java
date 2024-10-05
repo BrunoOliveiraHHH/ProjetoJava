@@ -2,10 +2,8 @@ package entidades;
 
 import java.time.LocalDate;
 
-public class Autor {
+public class Autor extends Pessoa {
 
-	private Long id;
-	private String nome;
 	private String biografia;
 	private String nacionalidade;
 	private LocalDate dataNascimento;
@@ -51,8 +49,7 @@ public class Autor {
 	}
 
 	public Autor(Long id, String nome, String biografia, String nacionalidade, LocalDate dataNascimento) {
-		this.id = id;
-		this.nome = nome;
+		super(nome, id);
 		this.biografia = biografia;
 		this.nacionalidade = nacionalidade;
 		this.dataNascimento = dataNascimento;
