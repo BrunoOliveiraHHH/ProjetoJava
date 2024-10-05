@@ -1,5 +1,6 @@
 package entidades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Usuario {
 	private String telefone;
 	private List<Emprestimo> emprestimo;// INNER JOIN
 	private String nome;
-	private Date dataAssociacao;
+	private LocalDate dataAssociacao;
 
 	public Long getId() {
 		return id;
@@ -60,16 +61,16 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public Date getDataAssociacao() {
+	public LocalDate getDataAssociacao() {
 		return dataAssociacao;
 	}
 
-	public void setDataAssociacao(Date dataAssociacao) {
+	public void setDataAssociacao(LocalDate dataAssociacao) {
 		this.dataAssociacao = dataAssociacao;
 	}
 
 	public Usuario(Long id, String endereco, String email, String telefone, List<Emprestimo> emprestimo, String nome,
-			Date dataAssociacao) {
+			LocalDate dataAssociacao) {
 		super();
 		this.id = id;
 		this.endereco = endereco;
