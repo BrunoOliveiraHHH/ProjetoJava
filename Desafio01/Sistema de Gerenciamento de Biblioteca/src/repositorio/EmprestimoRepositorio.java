@@ -44,9 +44,9 @@ public class EmprestimoRepositorio {
 		return retorno;
 	}
 
-	public Livro buscar(Livro livro) {
+	public Emprestimo buscar(Emprestimo emprestimo) {
 
-		return new Livro();
+		return new Emprestimo();
 	}
 
 }

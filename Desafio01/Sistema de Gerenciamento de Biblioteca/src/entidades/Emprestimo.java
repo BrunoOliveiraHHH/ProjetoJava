@@ -3,9 +3,11 @@ package entidades;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import entidades.enums.SituacaoEmprestimo;
+
 public class Emprestimo {
 
-	private situacaoEmprestimo id;
+	private SituacaoEmprestimo id;
 	private Livro livro;
 	private Usuario usuario;
 	private LocalDate dataEmprestimo;
@@ -13,7 +15,7 @@ public class Emprestimo {
 	private String estado;
 	private Double multa;
 
-	public Emprestimo(situacaoEmprestimo id, Livro livro, Usuario usuario, LocalDate dataEmprestimo,
+	public Emprestimo(SituacaoEmprestimo id, Livro livro, Usuario usuario, LocalDate dataEmprestimo,
 			LocalDate dataDevolucao, String estado, Double multa) {
 		this.id = id;
 		this.livro = livro;
@@ -24,11 +26,14 @@ public class Emprestimo {
 		this.multa = multa;
 	}
 
-	public situacaoEmprestimo getId() {
+	public Emprestimo() {
+	}
+
+	public SituacaoEmprestimo getId() {
 		return id;
 	}
 
-	public void setId(situacaoEmprestimo id) {
+	public void setId(SituacaoEmprestimo id) {
 		this.id = id;
 	}
 

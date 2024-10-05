@@ -10,25 +10,25 @@ import java.util.Date;
 import conexao.conexaoBancoDeDados;
 
 public class Livro {
-    private String isbn;
-    private String titulo;
-    private String autor;
-    private String genero;
-    private Date dataPublicacao;
-    private int quantidade;
+	private String isbn;
+	private String titulo;
+	private String autor;
+	private String genero;
+	private Date dataPublicacao;
+	private int quantidade;
 
-    // Construtor principal
-    public Livro(String isbn, String titulo, String autor, Date dataPublicacao, String genero, int quantidade) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.dataPublicacao = dataPublicacao;
-        this.genero = genero;
-        this.quantidade = quantidade;
-    }
-    
-    public Livro() {
-    }
+	// Construtor principal
+	public Livro(String isbn, String titulo, String autor, Date dataPublicacao, String genero, int quantidade) {
+		this.isbn = isbn;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.dataPublicacao = dataPublicacao;
+		this.genero = genero;
+		this.quantidade = quantidade;
+	}
+
+	public Livro() {
+	}
 
 	public String getIsbn() {
 		return isbn;
@@ -77,8 +77,5 @@ public class Livro {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-   
+
 }
-
-
-

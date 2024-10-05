@@ -10,6 +10,9 @@ public class Main {
         
         System.out.println("Menu Livraria Aurora");
         System.out.println("1-Usuario");
+        System.out.println("2-Livro");
+        System.out.println("3-Autor");
+        System.out.println("4-Emprestimo");
         // to Do: aplicar listagem numerada de menus;
         
         System.out.println("Escolha sua opção(numero):");
@@ -22,6 +25,12 @@ public class Main {
         		switch(Integer.parseInt(escolha)) {
         		case 1:
         			System.out.println("Menu Usuario");
+        		case 2:
+        			System.out.println("Menu Livro");
+        		case 3:
+        			System.out.println("Menu Autor");
+        		case 4:
+        			System.out.println("Menu Emprestimo");
         		}
         		
         	}catch(NumberFormatException e) {

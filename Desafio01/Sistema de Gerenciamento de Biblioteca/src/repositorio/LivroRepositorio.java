@@ -1,6 +1,5 @@
 package repositorio;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,7 +21,7 @@ public class LivroRepositorio {
 			Connection connection = con.getConnection();
 			Livro livroDB = buscar(livro);
 			PreparedStatement statement = connection.prepareStatement(sql);
-			
+
 			Date dtPublicacao = Date.valueOf(livro.getDataPublicacao().toString());
 
 			statement.setString(1, livro.getIsbn());
@@ -46,8 +45,8 @@ public class LivroRepositorio {
 	}
 
 	public Livro buscar(Livro livro) {
-		
+
 		return new Livro();
 	}
-	
+
 }

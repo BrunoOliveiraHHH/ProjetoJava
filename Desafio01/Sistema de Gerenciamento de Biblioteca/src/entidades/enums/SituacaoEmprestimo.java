@@ -1,9 +1,9 @@
-package entidades;
+package entidades.enums;
 
 public enum SituacaoEmprestimo {
-    ATIVO(1),
-    CONCLUIDO(2),
-    ATRASADO(3);
+	ATIVO(1), 
+	CONCLUIDO(2), 
+	ATRASADO(3);
 
 	SituacaoEmprestimo(int i) {
 	}
