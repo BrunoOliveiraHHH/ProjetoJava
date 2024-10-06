@@ -81,5 +81,9 @@ public class Usuario extends Pessoa {
 		this.dataAssociacao = dataAssociacao;
 	}
 
+	public Usuario() {
+		super();
+	}
+
 
 }

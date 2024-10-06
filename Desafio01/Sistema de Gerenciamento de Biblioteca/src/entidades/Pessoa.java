@@ -11,5 +11,10 @@ public class Pessoa {
 		this.nome = nome;
 		this.id = id;
 	}
+
+
+	public Pessoa() {
+		
+	}
 	
 }

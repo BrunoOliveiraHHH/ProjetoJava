@@ -1,5 +1,6 @@
 package entidades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
 
@@ -69,6 +70,10 @@ public class Livro {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public void setDataPublicacao(LocalDate now) {
+		
 	}
 
 }
