@@ -7,10 +7,9 @@ import java.sql.SQLException;
 
 import conexao.conexaoBancoDeDados;
 import entidades.Emprestimo;
-import entidades.Livro;
 
 public class EmprestimoRepositorio {
-	
+
 	private conexaoBancoDeDados con;
 
 	public boolean Emprestimos(Emprestimo emprestimo) {
@@ -25,14 +24,15 @@ public class EmprestimoRepositorio {
 
 			Date dtEmprestimo = Date.valueOf(emprestimo.getDataEmprestimo().toString());
 			Date dtDevolucao = Date.valueOf(emprestimo.getDataDevolucao().toString());
+			Float multa = emprestimo.getMulta().floatValue();
 
 			statement.setLong(1, emprestimo.getId());
-			statement.setString(2, emprestimo.getLivro());
-			statement.setString(3, emprestimo.getUsuario());
+			statement.setLong(2, emprestimo.getLivro().getId());
+			statement.setLong(3, emprestimo.getUsuario().getId());
 			statement.setDate(4, dtEmprestimo);
 			statement.setDate(5, dtDevolucao);
 			statement.setString(6, emprestimo.getEstado());
-			statement.setBigDecimal(7, emprestimo.getMulta());
+			statement.setFloat(7, multa);
 
 			if (emprestimoDB == null) {
 				int rowsInserted = statement.executeUpdate();

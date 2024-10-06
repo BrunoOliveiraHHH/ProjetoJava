@@ -1,39 +1,32 @@
 package entidades;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import conexao.conexaoBancoDeDados;
+import java.util.Random;
 
 public class Livro {
+	private Long id;
 	private String isbn;
 	private String titulo;
 	private String autor;
 	private String genero;
 	private Date dataPublicacao;
 	private int quantidade;
+	
+	Random random = new Random();
 
-	// Construtor principal
-	public Livro(String isbn, String titulo, String autor, Date dataPublicacao, String genero, int quantidade) {
-		this.isbn = isbn;
-		this.titulo = titulo;
-		this.autor = autor;
-		this.dataPublicacao = dataPublicacao;
-		this.genero = genero;
-		this.quantidade = quantidade;
+
+	public Long getId() {
+		return id;
 	}
 
-	public Livro() {
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getIsbn() {
 		return isbn;
 	}
-
+	
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}

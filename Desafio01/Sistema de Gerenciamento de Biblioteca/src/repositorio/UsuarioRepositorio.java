@@ -46,6 +46,6 @@ public class UsuarioRepositorio {
 
 	public Usuario buscar(Usuario usuario) {
 		
-		return new Usuario();
+		return new Usuario(null, null, null, null, null, null, null);
 	}
 }
