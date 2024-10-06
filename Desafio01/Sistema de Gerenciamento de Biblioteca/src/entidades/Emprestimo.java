@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Emprestimo {
 
 	private Long id;
-	private String livro;
-	private String usuario;
+	private Livro livro;
+	private Usuario usuario;
 	private LocalDate dataEmprestimo;
 	private LocalDate dataDevolucao;
 	private String estado;
 	private Double multa;
 
-	public Emprestimo(Long id, String livro, String usuario, LocalDate dataEmprestimo,
+	public Emprestimo(Long id, Livro livro, Usuario usuario, LocalDate dataEmprestimo,
 			LocalDate dataDevolucao, String estado, Double multa) {
 		this.id = id;
 		this.livro = livro;
@@ -38,16 +38,16 @@ public class Emprestimo {
 		return livro;
 	}
 
-	public void setLivro(String string) {
-		this.livro = string;
+	public void setLivro(Livro livro) {
+		this.livro = livro;
 	}
 
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(String string) {
-		this.usuario = string;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public LocalDate getDataEmprestimo() {
@@ -90,7 +90,15 @@ public class Emprestimo {
 		
 	}
 
-	public void setAutor(String string) {
+	public Emprestimo getUsuario1() {
+		return null;
+	}
+
+	public void setUsuario(String string) {
+		
+	}
+
+	public void setLivro(String string) {
 		
 	}
 

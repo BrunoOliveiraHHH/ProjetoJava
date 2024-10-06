@@ -54,4 +54,11 @@ public class Autor extends Pessoa {
 		this.nacionalidade = nacionalidade;
 		this.dataNascimento = dataNascimento;
 	}
+
+	public Autor() {
+	}
+
+	public String getNacionalidade1() {
+		return null;
+	}
 }

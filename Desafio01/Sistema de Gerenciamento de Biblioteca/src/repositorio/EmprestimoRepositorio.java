@@ -10,11 +10,14 @@ import java.util.List;
 
 import conexao.conexaoBancoDeDados;
 import entidades.Emprestimo;
-import entidades.Livro;
 
 public class EmprestimoRepositorio {
 
 	private conexaoBancoDeDados con;
+
+	public Long gerarIdAleatorio() {
+		return (long) (Math.random() * 1_000_000L);
+	}
 
 	public boolean Emprestimos(Emprestimo emprestimo) {
 		boolean retorno = false;
@@ -29,6 +32,7 @@ public class EmprestimoRepositorio {
 			Date dtEmprestimo = Date.valueOf(emprestimo.getDataEmprestimo().toString());
 			Date dtDevolucao = Date.valueOf(emprestimo.getDataDevolucao().toString());
 			Float multa = emprestimo.getMulta().floatValue();
+			
 
 			statement.setLong(1, emprestimo.getId());
 			statement.setLong(2, emprestimo.getLivro().getId());
@@ -45,7 +49,7 @@ public class EmprestimoRepositorio {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Erro ao inserir livro: " + e.getMessage());
+			System.err.println("Erro ao buscar emprestimo: " + e.getMessage());
 		}
 
 		return retorno;
@@ -53,12 +57,12 @@ public class EmprestimoRepositorio {
 
 	public Emprestimo buscarEmprestimo(Emprestimo emprestimo) {
 		Emprestimo emprestimoDB = null;
-		String sql = "SELECT id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa FROM livro WHERE nome = ?";
+		String sql = "SELECT id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa FROM emprestimo WHERE nome = ?";
 		try {
 			Connection connection = con.getConnection();
 			PreparedStatement st = connection.prepareStatement(sql);
 
-			st.setString(1, emprestimo.getTitulo());
+			st.setLong(1, emprestimo.getId());
 
 			ResultSet rs = st.executeQuery();
 			if (rs != null) {
@@ -67,7 +71,6 @@ public class EmprestimoRepositorio {
 					emprestimoDB.setId(rs.getLong("id"));
 					emprestimoDB.setLivro(rs.getString("livro"));
 					emprestimoDB.setUsuario(rs.getString("usuario"));
-					emprestimoDB.setAutor(rs.getString("autor"));
 					emprestimoDB.setDataEmprestimo(LocalDate.now());
 					emprestimoDB.setDataDevolucao(LocalDate.now());
 					emprestimoDB.setEstado(rs.getString("estado"));
@@ -87,6 +90,7 @@ public class EmprestimoRepositorio {
 	}
 
 	public List<Emprestimo> buscarPorUsuario(Long id) {
+		
 		return null;
 	}
 
