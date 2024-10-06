@@ -1,6 +1,7 @@
 
 package livraria;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import entidades.Autor;
@@ -13,16 +14,9 @@ import repositorio.LivroRepositorio;
 import repositorio.UsuarioRepositorio;
 
 public class Main {
-	public static void main(String[] args) {
+	static UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
 
-		Usuario usuario = new Usuario();
-		UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
-		Emprestimo emprestimo = new Emprestimo();
-		EmprestimoRepositorio emprestimoRepositorio = new EmprestimoRepositorio();
-		Livro livro = new Livro();
-		LivroRepositorio livroRepositorio = new LivroRepositorio();
-		Autor autor = new Autor();
-		AutorRepositorio autorRepositorio = new AutorRepositorio();
+	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 
@@ -44,35 +38,28 @@ public class Main {
 				case 1:
 					System.out.println("Menu Usuario");
 					System.out.println("------------------");
-					System.out.println("Digite seu email para consultar suas informações: ");
-					usuarioRepositorio.salvarUsuario(null);
-					usuarioRepositorio.buscarUsuario(null);
-					String email = sc.nextLine();
+					System.out.println("1-Cadastrar Usuario");
+					System.out.println("2-Buscar Usuario");
+					System.out.println("3-Alterar Usuario");
+					System.out.println("4-Excluir Usuario");
+					int escolhaUsuario = sc.nextInt();
+					menuUsuario(escolhaUsuario);
 					break;
 				case 2:
 					System.out.println("Menu Livro");
 					System.out.println("------------------");
 					System.out.println("Digite o nome do livro para consultar as informações do livro: ");
-					livroRepositorio.salvarLivro(null);
-					livroRepositorio.buscarLivro(null);
-					String nomeLivro = sc.nextLine();
 					break;
 				case 3:
 					System.out.println("Menu Autor");
 					System.out.println("------------------");
 					System.out.println("Digite o nome do Autor para consultar as informações: ");
-					autorRepositorio.salvarAutor(null);
-					autorRepositorio.buscarAutor(null);
-					String nomeAutor = sc.nextLine();
 
 					break;
 				case 4:
 					System.out.println("Menu Emprestimo");
 					System.out.println("------------------");
 					System.out.println("Digite seu ID de usuário para consultar os emprestimos: ");
-					emprestimoRepositorio.Emprestimos(null);
-					emprestimoRepositorio.buscarEmprestimo(null);
-					String usuarioId = sc.nextLine();
 					break;
 				}
 			} catch (NumberFormatException e) {
@@ -82,5 +69,45 @@ public class Main {
 			}
 			sc.close();
 		}
+	}
+
+	private static void menuUsuario(int escolhaUsuario) {
+		Scanner sc = new Scanner(System.in);
+		Usuario usuario;
+		switch (escolhaUsuario) {
+		case 1:
+			System.out.println("Cadastro de Usuario");
+			System.out.println("Nome:");
+			String nome = sc.nextLine();
+			System.out.println("Endereco:");
+			String endereco = sc.nextLine();
+			System.out.println("Email:");
+			String email = sc.nextLine();
+			System.out.println("Telefone:");
+			String telefone = sc.nextLine();
+			usuario = new Usuario(null, endereco, email, telefone, null, nome, LocalDate.now());
+			boolean retorno = usuarioRepositorio.salvarUsuario(usuario);
+			if (retorno) {
+				System.out.println("Usuario Salvo com Sucesso!");
+			} else {
+				System.out.println("Erro ao salvar usuario, verfique o log do console!");
+			}
+			break;
+		case 2:
+			System.out.println("Buscar Usuario");
+			System.out.println("Digite o nome do usuario:");
+			nome = sc.nextLine();
+			usuario = new Usuario();
+			usuario.setNome(nome);
+			Usuario usuarioDB = usuarioRepositorio.buscarUsuario(usuario);
+			System.out.println("Nome: " + usuarioDB.getNome());
+			System.out.println("Endereco: " + usuarioDB.getEndereco());
+			System.out.println("Email: " + usuario.getEmail());
+			System.out.println("Telefone: " + usuario.getTelefone());
+			System.out.println("Data de Associacao: " + usuario.getDataAssociacao());
+			System.out.println("Emprestimo: " + usuario.getEmprestimo());
+			break;
+		}
+		sc.close();
 	}
 }
