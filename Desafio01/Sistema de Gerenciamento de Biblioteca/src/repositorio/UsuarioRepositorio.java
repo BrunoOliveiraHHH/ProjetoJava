@@ -1,18 +1,17 @@
 package repositorio;
 
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import conexao.conexaoBancoDeDados;
 import entidades.Usuario;
 
 public class UsuarioRepositorio {
 
-	private conexaoBancoDeDados con;
+	private conexaoBancoDeDados con = new conexaoBancoDeDados();
 	private EmprestimoRepositorio emprestimoRepositorio = new EmprestimoRepositorio();
 
 	public boolean salvarUsuario(Usuario usuario) {
@@ -25,14 +24,21 @@ public class UsuarioRepositorio {
 			Usuario usuarioDB = buscar(usuario);
 			PreparedStatement statement = connection.prepareStatement(sql);
 
-			Date dtAssociacao = Date.valueOf(usuario.getDataAssociacao().toString());
+			if (usuario.getDataAssociacao() != null) {
+				java.sql.Date dtAssociacao = java.sql.Date.valueOf(usuario.getDataAssociacao());
+				statement.setDate(6, dtAssociacao);
+			} else {
 
-			statement.setFloat(1, usuario.getId());
+				System.err.println("Data de associação não pode ser nula.");
+				return retorno;
+			}
+
+			statement.setLong(1, usuario.getId());
 			statement.setString(2, usuario.getNome());
 			statement.setString(3, usuario.getEndereco());
 			statement.setString(4, usuario.getEmail());
 			statement.setString(5, usuario.getTelefone());
-			statement.setDate(6, dtAssociacao);
+			statement.setDate(4, java.sql.Date.valueOf(usuario.getDataAssociacao()));
 
 			if (usuarioDB == null) {
 				int rowsInserted = statement.executeUpdate();
@@ -41,7 +47,7 @@ public class UsuarioRepositorio {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Erro ao inserir livro: " + e.getMessage());
+			System.err.println("Erro ao inserir usuário: " + e.getMessage());
 		}
 
 		return retorno;
@@ -66,9 +72,10 @@ public class UsuarioRepositorio {
 					usuarioDB = new Usuario();
 					usuarioDB.setId(rs.getLong("id"));
 					usuarioDB.setNome(rs.getString("nome"));
+					usuarioDB.setEmail(rs.getString("email"));
 					usuarioDB.setEndereco(rs.getString("endereco"));
 					usuarioDB.setTelefone(rs.getString("telefone"));
-					usuarioDB.setDataAssociacao(LocalDate.now());
+					usuarioDB.setDataAssociacao(rs.getDate("dataAssociacao").toLocalDate());
 					usuarioDB.setEmprestimo(emprestimoRepositorio.buscarPorUsuario(usuarioDB.getId()));
 				}
 			}

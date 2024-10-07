@@ -12,14 +12,18 @@ import entidades.Autor;
 
 public class AutorRepositorio {
 
-	private conexaoBancoDeDados con;
-	
+	private conexaoBancoDeDados con = new conexaoBancoDeDados();
+
 	public Long gerarIdAleatorio() {
 		return (long) (Math.random() * 1_000_000L);
 	}
 
 	public boolean salvarAutor(Autor autor) {
 		boolean retorno = false;
+
+		if (autor.getId() == null) {
+			autor.setId(gerarIdAleatorio());
+		}
 
 		String sql = "INSERT INTO autor (id, nome, biografia, nacionalidade, dataNascimento) VALUES (?,?,?,?,?)";
 
@@ -28,13 +32,17 @@ public class AutorRepositorio {
 			Autor autorDB = buscar(autor);
 			PreparedStatement statement = connection.prepareStatement(sql);
 
-			Date dtNascimento = Date.valueOf(autor.getDataNascimento().toString());
+			if (autor.getDataNascimento() != null) {
+                Date dtNascimento = Date.valueOf(autor.getDataNascimento());
+                statement.setDate(5, dtNascimento);
+            } else {
+                statement.setDate(5, null);
+            }
 
-			statement.setFloat(1, autor.getId());
+			statement.setLong(1, autor.getId());
 			statement.setString(2, autor.getNome());
 			statement.setString(3, autor.getBiografia());
 			statement.setString(4, autor.getNacionalidade());
-			statement.setDate(5, dtNascimento);
 
 			if (autorDB == null) {
 				int rowsInserted = statement.executeUpdate();
@@ -70,7 +78,10 @@ public class AutorRepositorio {
 					autorDB.setNome(rs.getString("nome"));
 					autorDB.setBiografia(rs.getString("biografia"));
 					autorDB.setNacionalidade(rs.getString("nacionalidade"));
-					autorDB.setDataNascimento(LocalDate.now());
+					Date dataNascimento = rs.getDate("dataNascimento");
+                    if (dataNascimento != null) {
+                        autorDB.setDataNascimento(dataNascimento.toLocalDate());
+                    }
 				}
 			}
 

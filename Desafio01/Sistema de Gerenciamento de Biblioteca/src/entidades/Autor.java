@@ -1,5 +1,6 @@
 package entidades;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Autor extends Pessoa {
@@ -60,5 +61,10 @@ public class Autor extends Pessoa {
 
 	public String getNacionalidade1() {
 		return null;
+	}
+
+	public void setDataNascimento(Date date) {
+		// TODO Auto-generated method stub
+		
 	}
 }

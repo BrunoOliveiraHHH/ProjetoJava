@@ -11,12 +11,12 @@ public class Usuario extends Pessoa {
 	private String telefone;
 	private List<Emprestimo> emprestimo;// INNER JOIN
 	private LocalDate dataAssociacao;
-	
+
 	Random random = new Random();
 
 	public Long getId() {
 		int id = random.nextInt(90000);
-		 return Long.valueOf(id);
+		return Long.valueOf(id);
 	}
 
 	public void setId(Long id) {
@@ -84,6 +84,5 @@ public class Usuario extends Pessoa {
 	public Usuario() {
 		super();
 	}
-
 
 }

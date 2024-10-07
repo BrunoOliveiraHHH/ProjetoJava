@@ -1,7 +1,6 @@
 package repositorio;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,37 +9,69 @@ import java.util.List;
 
 import conexao.conexaoBancoDeDados;
 import entidades.Emprestimo;
+import entidades.enums.SituacaoEmprestimo;
 
 public class EmprestimoRepositorio {
 
-	private conexaoBancoDeDados con;
+	private conexaoBancoDeDados con = new conexaoBancoDeDados();
 
 	public Long gerarIdAleatorio() {
 		return (long) (Math.random() * 1_000_000L);
 	}
 
-	public boolean Emprestimos(Emprestimo emprestimo) {
+	public double calcularMulta(Emprestimo emprestimo, double valorMultaDiaria) {
+		LocalDate dataEmprestimo = emprestimo.getDataEmprestimo();
+		LocalDate dataDevolucao = emprestimo.getDataDevolucao();
+
+		if (dataEmprestimo == null || dataDevolucao == null) {
+			throw new IllegalArgumentException("As datas de empréstimo e devolução não podem ser nulas.");
+		}
+
+		long diasAtraso = java.time.temporal.ChronoUnit.DAYS.between(dataEmprestimo, dataDevolucao);
+		if (diasAtraso > 3) {
+			double multa = (diasAtraso - 3) * valorMultaDiaria;
+			return multa;
+		}
+
+		return 0.0;
+	}
+
+	public boolean salvarEmprestimo(Emprestimo emprestimo, double valorMultaDiaria) {
 		boolean retorno = false;
 
-		String sql = "INSERT INTO emprestimo (id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa) VALUES (?,?,?,?,?,?,?)";
+		double multaCalculada = calcularMulta(emprestimo, valorMultaDiaria);
+		emprestimo.setMulta(multaCalculada);
+
+		String sql = "INSERT INTO emprestimo (id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa) VALUES (?,?,?,?,?,?)";
 
 		try {
 			Connection connection = con.getConnection();
 			Emprestimo emprestimoDB = buscar(emprestimo);
 			PreparedStatement statement = connection.prepareStatement(sql);
 
-			Date dtEmprestimo = Date.valueOf(emprestimo.getDataEmprestimo().toString());
-			Date dtDevolucao = Date.valueOf(emprestimo.getDataDevolucao().toString());
-			Float multa = emprestimo.getMulta().floatValue();
-			
+			if (emprestimo.getDataDevolucao() != null) {
+				java.sql.Date dtDataDevolucao = java.sql.Date.valueOf(emprestimo.getDataDevolucao());
+				statement.setDate(4, dtDataDevolucao);
+			} else if (emprestimo.getDataEmprestimo() != null) {
+				java.sql.Date dtDataEmprestimo = java.sql.Date.valueOf(emprestimo.getDataEmprestimo());
+				statement.setDate(5, dtDataEmprestimo);
+			} else {
+				System.err.println("Data de emprestimo não pode ser nula.");
+				return retorno;
+			}
+
+			if (emprestimo.getLivro() == null) {
+				System.err.println("O livro do empréstimo não pode ser nulo.");
+				return retorno;
+			}
 
 			statement.setLong(1, emprestimo.getId());
-			statement.setLong(2, emprestimo.getLivro().getId());
+			statement.setString(2, emprestimo.getLivro().getTitulo());
 			statement.setLong(3, emprestimo.getUsuario().getId());
-			statement.setDate(4, dtEmprestimo);
-			statement.setDate(5, dtDevolucao);
-			statement.setString(6, emprestimo.getEstado());
-			statement.setFloat(7, multa);
+			statement.setDate(4, java.sql.Date.valueOf(emprestimo.getDataEmprestimo()));
+			statement.setDate(5, java.sql.Date.valueOf(emprestimo.getDataDevolucao()));
+			statement.setString(6, emprestimo.getEstado().name());
+			statement.setDouble(7, emprestimo.getMulta());
 
 			if (emprestimoDB == null) {
 				int rowsInserted = statement.executeUpdate();
@@ -57,7 +88,7 @@ public class EmprestimoRepositorio {
 
 	public Emprestimo buscarEmprestimo(Emprestimo emprestimo) {
 		Emprestimo emprestimoDB = null;
-		String sql = "SELECT id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa FROM emprestimo WHERE nome = ?";
+		String sql = "SELECT id, livro, usuario, dataEmprestimo, dataDevolucao, estado, multa FROM emprestimo WHERE id = ?";
 		try {
 			Connection connection = con.getConnection();
 			PreparedStatement st = connection.prepareStatement(sql);
@@ -73,7 +104,7 @@ public class EmprestimoRepositorio {
 					emprestimoDB.setUsuario(rs.getString("usuario"));
 					emprestimoDB.setDataEmprestimo(LocalDate.now());
 					emprestimoDB.setDataDevolucao(LocalDate.now());
-					emprestimoDB.setEstado(rs.getString("estado"));
+					emprestimoDB.setEstado(SituacaoEmprestimo.valueOf(rs.getString("estado")));
 					emprestimoDB.setMulta((double) rs.getInt("multa"));
 				}
 			}
@@ -89,8 +120,8 @@ public class EmprestimoRepositorio {
 		return new Emprestimo();
 	}
 
-	public List<Emprestimo> buscarPorUsuario(Long id) {
-		
+	public List<Emprestimo> buscarPorUsuario(Long usuarioId) {
+
 		return null;
 	}
 

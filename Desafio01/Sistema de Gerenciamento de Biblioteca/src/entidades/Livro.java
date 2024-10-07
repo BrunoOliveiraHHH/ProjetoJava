@@ -1,8 +1,6 @@
 package entidades;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Random;
 
 public class Livro {
 	private Long id;
@@ -10,11 +8,19 @@ public class Livro {
 	private String titulo;
 	private String autor;
 	private String genero;
-	private Date dataPublicacao;
+	private LocalDate dataPublicacao;
 	private int quantidade;
-	
-	Random random = new Random();
 
+	public Livro(String titulo, String autor, LocalDate dataPublicacao, String genero, int quantidade) {
+		this.titulo = titulo;
+		this.autor = autor;
+		this.dataPublicacao = dataPublicacao;
+		this.genero = genero;
+		this.quantidade = quantidade;
+	}
+
+	public Livro() {
+	}
 
 	public Long getId() {
 		return id;
@@ -27,7 +33,7 @@ public class Livro {
 	public String getIsbn() {
 		return isbn;
 	}
-	
+
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
@@ -56,11 +62,11 @@ public class Livro {
 		this.genero = genero;
 	}
 
-	public Date getDataPublicacao() {
+	public LocalDate getDataPublicacao() {
 		return dataPublicacao;
 	}
 
-	public void setDataPublicacao(Date dataPublicacao) {
+	public void setDataPublicacao(LocalDate dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
 	}
 
@@ -72,8 +78,8 @@ public class Livro {
 		this.quantidade = quantidade;
 	}
 
-	public void setDataPublicacao(LocalDate now) {
-		
-	}
+	public void setDataPublicacao(String dataPublicacaoStr) {
+		// TODO Auto-generated method stub
 
+	}
 }

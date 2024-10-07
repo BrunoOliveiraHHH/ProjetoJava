@@ -5,6 +5,18 @@ public enum SituacaoEmprestimo {
 	CONCLUIDO(2), 
 	ATRASADO(3);
 
-	SituacaoEmprestimo(int i) {
+	private int codigo;
+
+	SituacaoEmprestimo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public static SituacaoEmprestimo fromCodigo(int codigo) {
+		for (SituacaoEmprestimo situacao : SituacaoEmprestimo.values()) {
+			if (situacao.codigo == codigo) {
+				return situacao;
+			}
+		}
+		throw new IllegalArgumentException("Código de situação inválido");
 	}
 }

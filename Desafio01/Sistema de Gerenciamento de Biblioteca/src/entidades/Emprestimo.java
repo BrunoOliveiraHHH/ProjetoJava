@@ -1,6 +1,9 @@
 package entidades;
 
 import java.time.LocalDate;
+import java.util.Random;
+
+import entidades.enums.SituacaoEmprestimo;
 
 public class Emprestimo {
 
@@ -9,11 +12,11 @@ public class Emprestimo {
 	private Usuario usuario;
 	private LocalDate dataEmprestimo;
 	private LocalDate dataDevolucao;
-	private String estado;
+	private SituacaoEmprestimo estado;
 	private Double multa;
 
-	public Emprestimo(Long id, Livro livro, Usuario usuario, LocalDate dataEmprestimo,
-			LocalDate dataDevolucao, String estado, Double multa) {
+	public Emprestimo(Long id, Livro livro, Usuario usuario, LocalDate dataEmprestimo, LocalDate dataDevolucao,
+			SituacaoEmprestimo estado, Double multa) {
 		this.id = id;
 		this.livro = livro;
 		this.usuario = usuario;
@@ -23,15 +26,18 @@ public class Emprestimo {
 		this.multa = multa;
 	}
 
+	Random random = new Random();
+
 	public Emprestimo() {
 	}
 
 	public Long getId() {
-		return id;
+		id = random.nextLong(90000);
+		return Long.valueOf(id);
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long id2) {
+		this.id = id2;
 	}
 
 	public Livro getLivro() {
@@ -66,12 +72,12 @@ public class Emprestimo {
 		this.dataDevolucao = dataDevolucao;
 	}
 
-	public String getEstado() {
+	public SituacaoEmprestimo getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setEstado(SituacaoEmprestimo situacao) {
+		this.estado = situacao;
 	}
 
 	public Double getMulta() {
@@ -87,7 +93,7 @@ public class Emprestimo {
 	}
 
 	public void setLivro1(String string) {
-		
+
 	}
 
 	public Emprestimo getUsuario1() {
@@ -95,11 +101,25 @@ public class Emprestimo {
 	}
 
 	public void setUsuario(String string) {
-		
+
 	}
 
 	public void setLivro(String string) {
-		
+
+	}
+
+	public void setId(String id2) {
+
+	}
+
+	public void setMulta(String multa2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setEstado(int estado2) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
